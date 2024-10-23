@@ -12,6 +12,15 @@ public class RegisterUserRequestDTO {
     private String phoneNumber;
     private String password;
 
+    public RegisterUserRequestDTO() {
+
+    }
+
+    public RegisterUserRequestDTO(String name, String phoneNumber, String password) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+    }
 
     @Override
     public String toString() {

@@ -4,12 +4,14 @@ package com.project.splitwise.Models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
+@ToString
 public class Expense extends BaseModel{
 
     private int amount;
@@ -23,4 +25,7 @@ public class Expense extends BaseModel{
 
     @ManyToOne
     private Group group;
+
+    @ManyToOne
+    private User addedBy;
 }

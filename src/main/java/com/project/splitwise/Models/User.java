@@ -1,11 +1,9 @@
 package com.project.splitwise.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
 import java.util.Set;
@@ -13,9 +11,12 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@ToString
 public class User extends BaseModel{
     private String name;
     private String password;
+
+    @Column(unique=true)
     private String phoneNumber;
 
 //    @ManyToMany

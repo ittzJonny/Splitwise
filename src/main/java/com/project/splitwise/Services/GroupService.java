@@ -9,6 +9,7 @@ import com.project.splitwise.Repositories.UserGroupRepo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.PersistenceException;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -21,8 +22,8 @@ import java.util.Optional;
 //@Transactional
 public class GroupService {
 
-    @PersistenceContext
-    private EntityManager em;
+//    @PersistenceContext
+//    private EntityManager em;
 
     @Autowired
     private UserService userService;
@@ -32,6 +33,9 @@ public class GroupService {
 
     @Autowired
     private UserGroupRepo userGroupRepo;
+
+//    @Autowired
+//    EntityManager entityManager;
 
     public Group getGroupById(long id)
     {
@@ -102,8 +106,7 @@ public class GroupService {
         {
             throw new RuntimeException("Error occured while adding admin to Group"+e.getMessage());
         }
-//        em.clear();
-//        em.flush();
+
 
         return gp;
     }
@@ -114,6 +117,8 @@ public class GroupService {
     public Group addMemberInGroup(String groupName, String memberPhoneNumber)
     {
 
+
+
         System.out.println("Adding member -------------------------------------------------");
         try {
             Group gp=this.getGroupByName(groupName);
@@ -121,17 +126,22 @@ public class GroupService {
 
             UserGroup userGroup= new UserGroup();
             userGroup.setUser(u);
-
             userGroup.setGroup(gp);
 
             gp.getUserList().size();
             u.getGroupsList().size();
 
+            if (gp.getUserList().parallelStream().anyMatch(spu->spu.getUser().getId()==u.getId()))
+            {
+                throw new RuntimeException("User Already Exists");
+            }
+
             userGroupRepo.save(userGroup);
 
             System.out.println("here");
 
-            return gp;
+//            entityManager.refresh(gp);
+            return getGroupByName(groupName);
         }
         catch (PersistenceException| DataIntegrityViolationException e){
             System.out.println("HERE");

@@ -4,6 +4,7 @@ package com.project.splitwise.Models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.TreeSet;
 @Getter
 @Setter
 @Entity
+@ToString
 @Table(name = "grp")
 public class Group extends BaseModel {
 
@@ -31,6 +33,12 @@ public class Group extends BaseModel {
     @OneToMany(mappedBy = "group")
     private List<Expense> expenseList;
 
+    public Group()
+    {
+        userList = new TreeSet<>((o1,o2)-> o1.getUser().getName().compareTo(o2.getUser().getName()));
+        expenseList= new ArrayList<>();
+    }
+
     @Override
     public String toString() {
         return "Group{" +
@@ -41,12 +49,6 @@ public class Group extends BaseModel {
                 '}';
     }
 
-    public Group()
-    {
-        userList = new TreeSet<>();
-        expenseList= new ArrayList<>();
 
-
-    }
 
 }

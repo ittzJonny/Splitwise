@@ -17,19 +17,10 @@ public class GroupController {
         ResponseFormat resp;
         try {
             Group group=groupService.addMemberInGroup(req.getGroupName(),req.getMemberPhoneNumber());
-            GroupResponseDTO res=new GroupResponseDTO();
+            AddMemberInGroupResponseDTO res=new AddMemberInGroupResponseDTO();
 //            System.out.println(group);
-            res.setGroupId(group.getId());
-            res.setGroupAdmin(group.getAdmin().getName());
-            res.setGroupName(group.getName());
-            res.setGroupAdminPhoneNumber(group.getAdmin().getPhoneNumber());
-            for (UserGroup u:group.getUserList())
-            {
-                res.getMemberList().add(u.getUser().getName());
-                res.getMemberPhoneList().add(u.getUser().getPhoneNumber());
-            }
+            res.setMessage("User Added Successfully");
             res.setResponseStatus(ResponseStatus.SUCCESS);
-            res.setResponseMessage("Successfully added member");
             resp=res;
         }
         catch(Exception e)

@@ -5,6 +5,7 @@ import com.project.splitwise.Models.User;
 import com.project.splitwise.Models.UserGroup;
 import com.project.splitwise.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
@@ -60,6 +61,7 @@ public class UserController {
             resp.setResponseStatus(ResponseStatus.FAIL);
             resp.setMessage("User Retrieve Failed: "+e.getMessage());
         }
+
 
         return null;
     }
