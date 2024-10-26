@@ -39,6 +39,9 @@ public class SettleUpStrategyHeap extends SettleUpStrategy{
                     maxHeap.add(Pair.of(v.getUser(), v.getNetAmount()));
                 }
             }
+
+
+
         );
 
     }
