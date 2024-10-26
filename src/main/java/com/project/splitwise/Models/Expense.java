@@ -20,7 +20,7 @@ public class Expense extends BaseModel{
     @Enumerated(value = EnumType.STRING)
     private ExpenseType expenseType;
 
-    @OneToMany(mappedBy = "expense")
+    @OneToMany(mappedBy = "expense", fetch = FetchType.EAGER)
     private List<UserExpense> userExpenseList;
 
     @ManyToOne

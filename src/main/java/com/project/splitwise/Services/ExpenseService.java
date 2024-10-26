@@ -38,10 +38,10 @@ public class ExpenseService {
         this.userService = userService;
     }
 
-    public Expense addExpense(String phoneNumber, String groupName, String description ,
+    public Expense addExpense(String creatorPhoneNumber, String groupName, String description ,
                               List<Integer> amounts, List<String> userPhones, List<UserExpenseType> userExpenseTypes) {
 
-        User user= userService.getUserByPhone(phoneNumber);
+        User user= userService.getUserByPhone(creatorPhoneNumber);
         Group gp = null;
         if (groupName!=null)
         {

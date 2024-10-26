@@ -29,8 +29,8 @@ public class UserGroup
     public String toString() {
         return "UserGroup{" +
                 "userGroupId=" + userGroupId +
-                ", user=" + user +
-                ", group=" + group +
+                ", user=" + user.getName() +
+                ", group=" + group.getName() +
                 '}';
     }
 }

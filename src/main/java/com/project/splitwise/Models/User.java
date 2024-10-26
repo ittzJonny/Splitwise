@@ -31,7 +31,7 @@ public class User extends BaseModel{
                 "name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", groupsList=" + groupsList +
+
                 '}';
     }
 }

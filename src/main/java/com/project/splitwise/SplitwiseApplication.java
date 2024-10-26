@@ -1,13 +1,15 @@
 package com.project.splitwise;
 
+import com.project.splitwise.Controller.ExpenseController;
 import com.project.splitwise.Controller.GroupController;
+import com.project.splitwise.Controller.SettleUpController;
 import com.project.splitwise.Controller.UserController;
-import com.project.splitwise.DTOs.AddMemberInGroupRequestDTO;
-import com.project.splitwise.DTOs.CreateGroupRequestDTO;
-import com.project.splitwise.DTOs.RegisterUserRequestDTO;
+import com.project.splitwise.DTOs.*;
 import com.project.splitwise.Models.Expense;
+import com.project.splitwise.Models.Transaction;
 import com.project.splitwise.Models.UserExpenseType;
 import com.project.splitwise.Services.ExpenseService;
+import com.project.splitwise.Services.SettleUpService;
 import jakarta.persistence.EntityManager;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,89 +30,34 @@ public class SplitwiseApplication implements CommandLineRunner {
 	@Autowired
 	GroupController groupController;
 
+//	@Autowired
+//	ExpenseService es;
+
+//	@Autowired
+//	SettleUpService settleUpService;
+
 	@Autowired
-	ExpenseService es;
+	ExpenseController expenseController;
+
+	@Autowired
+	SettleUpController settleUpController;
 
 
 	@Override
 	public void run(String... args) throws Exception {
 
-		//Create Users
-//		RegisterUserRequestDTO req= new RegisterUserRequestDTO();
-//		req.setName("James");
-//		req.setPassword("1234");
-//		req.setPhoneNumber("1234567890");
-//		System.out.println(userController.createUser(req));
-//
-//		RegisterUserRequestDTO req1= new RegisterUserRequestDTO();
-//		req1.setName("Nat");
-//		req1.setPassword("1234");
-//		req1.setPhoneNumber("2234567890");
-//		System.out.println(userController.createUser(req1));
-//
-//		RegisterUserRequestDTO req2= new RegisterUserRequestDTO();
-//		req2.setName("Steve");
-//		req2.setPassword("1234");
-//		req2.setPhoneNumber("3234567890");
-//		System.out.println(userController.createUser(req2));
-//
-//		// Create group
-//		CreateGroupRequestDTO req3= new CreateGroupRequestDTO();
-//		req3.setGroupName("Trip Expense");
-//		req3.setPhoneNumber("3234567890");
-//		System.out.println(groupController.createGroup(req3));
-//
-////		System.out.println(groupController.getGroupByName("Trip Expense"));
-//
-////		Add Users in the group
-//		AddMemberInGroupRequestDTO req4=new AddMemberInGroupRequestDTO();
-//		req4.setGroupName("Trip Expense");
-//		req4.setMemberPhoneNumber("2234567890");
-//		System.out.println(groupController.addMember(req4));
-//		System.out.println(groupController.getGroupByName("Trip Expense"));
-
-//		System.out.println(userController.getUserByPhoneNumber("2234567890"));
-
-
-//		System.out.println(userController.createUser(new RegisterUserRequestDTO( "user T1", "7082232323", "password1" ))
-//		);
-//		System.out.println(userController.createUser(new RegisterUserRequestDTO( "user T2", "7082232334", "password1" )));
-//
-//
-//		CreateGroupRequestDTO cr1= new CreateGroupRequestDTO();
-//		cr1.setPhoneNumber("7082232334");
-//		cr1.setGroupName("HeHeGroup1");
-////
-//		System.out.println("Creating Group Main =================================================");
-//		System.out.println( groupController.createGroup(cr1));
-////
-//		System.out.println("Adding Member Main =================================================");
-//		AddMemberInGroupRequestDTO amg1= new AddMemberInGroupRequestDTO();
-//		amg1.setMemberPhoneNumber("7082232323");
-//		amg1.setGroupName("HeHeGroup1");
-//
-//		System.out.println( groupController.addMember(amg1));
-
-//		System.out.println("Creating new User =================================================");
-//		System.out.println(userController.createUser(new RegisterUserRequestDTO( "user T3", "12352467859", "password1" )));
-//
-//		System.out.println("Adding Member Main =================================================");
-//		AddMemberInGroupRequestDTO amg1= new AddMemberInGroupRequestDTO();
-//		amg1.setMemberPhoneNumber("12352467859");
-//		amg1.setGroupName("HeHeGroup1");
-//
-//		System.out.println( groupController.addMember(amg1));
-//
-//
-//		System.out.println(groupController.getGroupByName("HeHeGroup1"));
-
-
-
-//		createUsers();
-//		createGroup();
-//		addingMembersInGroup();
+		createUsers();
+		createGroup();
+		addingMembersInGroup();
 		createExpense();
 
+		SettleUpRequestDTO requestDTO = new SettleUpRequestDTO();
+		requestDTO.setGroupId(1L);
+		System.out.println(settleUpController.settleUpGroup(requestDTO));
+
+//		transactionList.forEach(s->
+//				System.out.println(s.getAmount()+" should be paid by "+s.getPaidBy()+" to "+s.getPaidTo())
+//		);
 
 
 	}
@@ -207,7 +154,18 @@ public class SplitwiseApplication implements CommandLineRunner {
 		String desc=" Bam Bam Bhole !!";
 		String groupName="Group 1";
 
-		Expense expense=es.addExpense(expensCreatedByUser_phone,groupName,desc,userExpenseAmounts,userPhones,userExpenseTypes);
+		CreateExpenseRequestDTO req1= new CreateExpenseRequestDTO();
+		req1.setAmounts(userExpenseAmounts);
+		req1.setUserExpenseTypes(userExpenseTypes);
+		req1.setUserPhones(userPhones);
+
+		req1.setDescription(desc);
+		req1.setGroupName(groupName);
+		req1.setExpenseCreatorPhoneNumber(expensCreatedByUser_phone);
+
+		System.out.println(expenseController.addExpense(req1));
+
+//		Expense expense=es.addExpense(expensCreatedByUser_phone,groupName,desc,userExpenseAmounts,userPhones,userExpenseTypes);
 //		System.out.println(expense);
 	}
 

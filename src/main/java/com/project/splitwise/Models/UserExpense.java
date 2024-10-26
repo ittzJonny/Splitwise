@@ -11,7 +11,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@ToString
 public class UserExpense extends BaseModel{
 
     int amount;
@@ -25,4 +24,12 @@ public class UserExpense extends BaseModel{
     @ManyToOne
     Expense expense;
 
+    @Override
+    public String toString() {
+        return "UserExpense{" +
+                "userExpenseType=" + userExpenseType +
+                ", user=" + user +
+                ", amount=" + amount +
+                '}';
+    }
 }
